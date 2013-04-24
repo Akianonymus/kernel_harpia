@@ -282,9 +282,9 @@ module_param_named(disable_numa, wq_disable_numa, bool, 0444);
 
 /* see the comment above the definition of WQ_POWER_EFFICIENT */
 #ifdef CONFIG_WQ_POWER_EFFICIENT_DEFAULT
-static bool wq_power_efficient = true;
+bool wq_power_efficient = true;
 #else
-static bool wq_power_efficient;
+bool wq_power_efficient = false;
 #endif
 
 module_param_named(power_efficient, wq_power_efficient, bool, 0644);

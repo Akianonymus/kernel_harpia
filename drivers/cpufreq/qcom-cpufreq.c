@@ -91,7 +91,7 @@ static int msm_cpufreq_target(struct cpufreq_policy *policy,
 
 	table = cpufreq_frequency_get_table(policy->cpu);
 	if (!table) {
-		pr_debug("cpufreq: Failed to get frequency table for CPU%u\n",
+		pr_err("cpufreq: Failed to get frequency table for CPU%u\n",
 		       policy->cpu);
 		ret = -ENODEV;
 		goto done;

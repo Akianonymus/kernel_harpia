@@ -358,6 +358,7 @@ static int update_userspace_power(struct sched_params __user *argp)
 	/* Copy the same power values for all the cpus in the cpumask
 	 * argp->cpumask within the cluster (argp->cluster)
 	 */
+	spin_lock(&update_lock);
 	cpumask = argp->cpumask;
 	for (i = 0; i < MAX_CORES_PER_CLUSTER; i++, cpumask >>= 1) {
 		if (!(cpumask & 0x01))
@@ -380,6 +381,7 @@ static int update_userspace_power(struct sched_params __user *argp)
 			repopulate_stats(cpu);
 		}
 	}
+	spin_unlock(&update_lock);
 
 	activate_power_table = true;
 	return 0;

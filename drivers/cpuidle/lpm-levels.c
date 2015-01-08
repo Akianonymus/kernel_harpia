@@ -26,6 +26,7 @@
 #include <linux/suspend.h>
 #include <linux/pm_qos.h>
 #include <linux/quickwakeup.h>
+#include <linux/cpu_pm.h>
 #include <linux/of_platform.h>
 #include <linux/smp.h>
 #include <linux/remote_spinlock.h>
@@ -487,9 +488,11 @@ static int cluster_configure(struct lpm_cluster *cluster, int idx,
 		if (ret)
 			goto failed_set_mode;
 
+		/*
+		 * Notify that the cluster is entering a low power mode
+		 */
 		if (level->mode[i] == MSM_SPM_MODE_POWER_COLLAPSE)
 			cpu_cluster_pm_enter(cluster->aff_level);
-
 	}
 	if (level->notify_rpm) {
 		struct cpumask nextcpu, *cpumask;
@@ -633,7 +636,6 @@ static void cluster_unprepare(struct lpm_cluster *cluster,
 		if (cluster->levels[last_level].mode[i] ==
 				MSM_SPM_MODE_POWER_COLLAPSE)
 			cpu_cluster_pm_exit(cluster->aff_level);
-
 	}
 unlock_return:
 	spin_unlock(&cluster->sync_lock);

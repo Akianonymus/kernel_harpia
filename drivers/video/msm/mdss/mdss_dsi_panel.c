@@ -948,11 +948,11 @@ end:
 		dropbox_count = 0;
 
 	pr_info("%s-. Pwr_mode(0x0A) = 0x%x\n", __func__, pwr_mode);
+
 #ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
-	if (prevent_sleep) {
 	dt2w_scr_suspended = false;
-	}
 #endif
+
 	return 0;
 }
 
@@ -1052,11 +1052,11 @@ static int mdss_dsi_panel_off(struct mdss_panel_data *pdata)
 end:
 	pinfo->blank_state = MDSS_PANEL_BLANK_BLANK;
 	pr_info("%s-:\n", __func__);
+
 #ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
-	if (prevent_sleep) {
 	dt2w_scr_suspended = true;
-	}
 #endif
+
 	return 0;
 }
 

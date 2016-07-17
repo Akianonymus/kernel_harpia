@@ -3709,6 +3709,9 @@ static int synaptics_rmi4_irq_enable(struct synaptics_rmi4_data *rmi4_data,
 					__func__);
 			return retval;
 		}
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+		irq_set_irq_wake(rmi4_data->irq, 1);
+#endif
 
 		dev_dbg(&rmi4_data->i2c_client->dev,
 				"%s: Started irq thread\n", __func__);
@@ -3719,6 +3722,10 @@ static int synaptics_rmi4_irq_enable(struct synaptics_rmi4_data *rmi4_data,
 			disable_irq(rmi4_data->irq);
 			free_irq(rmi4_data->irq, rmi4_data);
 			rmi4_data->irq_enabled = false;
+
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+		irq_set_irq_wake(rmi4_data->irq, 0);
+#endif
 
 		dev_dbg(&rmi4_data->i2c_client->dev,
 				"%s: Stopped irq thread\n", __func__);
@@ -6047,6 +6054,12 @@ static int synaptics_rmi4_suspend(struct device *dev)
 
 	if (atomic_cmpxchg(&rmi4_data->touch_stopped, 0, 1) == 1)
 		return 0;
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+	if (dt2w_switch > 0) {
+		pr_info("suspend avoided!\n");
+		return 0;
+	} else {
+#endif
 
 	rmi4_data->flash_enabled = false;
 	synaptics_dsx_sensor_state(rmi4_data, STATE_SUSPEND);
@@ -6080,11 +6093,21 @@ static int synaptics_rmi4_suspend(struct device *dev)
 
 		rmi4_data->ic_on = false;
 	}
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+        }
+#endif
 
 	pm_qos_update_request(&rmi4_data->pm_qos_irq, PM_QOS_DEFAULT_VALUE);
 
 	return 0;
 }
+
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+void touch_suspend(void)
+{
+ 	synaptics_rmi4_suspend(&(exp_fn_ctrl.rmi4_data_ptr->input_dev->dev));
+}
+#endif
 
  /**
  * synaptics_rmi4_resume()
@@ -6172,6 +6195,13 @@ static int synaptics_rmi4_resume(struct device *dev)
 	synaptics_dsx_resumeinfo_finish(rmi4_data);
 	return 0;
 }
+
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+void touch_resume(void)
+{
+	synaptics_rmi4_resume(&(exp_fn_ctrl.rmi4_data_ptr->input_dev->dev));
+}
+#endif
 
 static const struct dev_pm_ops synaptics_rmi4_dev_pm_ops = {
 	.suspend = synaptics_rmi4_suspend,

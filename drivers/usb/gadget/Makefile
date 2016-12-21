@@ -67,8 +67,8 @@ g_nokia-y			:= nokia.o
 g_webcam-y			:= webcam.o
 g_ncm-y				:= ncm.o
 g_acm_ms-y			:= acm_ms.o
-g_android-y			:= android.o
 g_tcm_usb_gadget-y		:= tcm_usb_gadget.o
+g_android-y			:= android.o f_hid.o
 
 obj-$(CONFIG_USB_ZERO)		+= g_zero.o
 obj-$(CONFIG_USB_AUDIO)		+= g_audio.o

@@ -1635,7 +1635,7 @@ static void bq24296_dump_register(void)
 	for (i = 0; i < ARRAY_SIZE(bq24296_regs); i++) {
 		rc = bq24296_read(the_chip, bq24296_regs[i].regaddress, &reg);
 		if (!rc)
-			pr_info("%s - 0x%02x = 0x%02x\n",
+			pr_debug("%s - 0x%02x = 0x%02x\n",
 					bq24296_regs[i].regname,
 					bq24296_regs[i].regaddress,
 					reg);

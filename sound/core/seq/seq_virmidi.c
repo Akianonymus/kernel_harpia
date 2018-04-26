@@ -163,9 +163,10 @@ static void snd_virmidi_output_trigger(struct snd_rawmidi_substream *substream, 
 			snd_rawmidi_transmit_ack(substream, substream->runtime->buffer_size - substream->runtime->avail);
 			return;		/* ignored */
 		}
+		spin_lock_irqsave(&substream->runtime->lock, flags);
 		if (vmidi->event.type != SNDRV_SEQ_EVENT_NONE) {
 			if (snd_seq_kernel_client_dispatch(vmidi->client, &vmidi->event, in_atomic(), 0) < 0)
-				return;
+				goto out;
 			vmidi->event.type = SNDRV_SEQ_EVENT_NONE;
 		}
 		while (1) {

@@ -1,4 +1,4 @@
-/* Copyright (c) 2014-2015, 2017, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2014, 2017, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -222,6 +222,7 @@ static int sharedmem_qmi_req_cb(struct qmi_handle *handle, void *conn_h,
 #define DEBUG_BUF_SIZE (2048)
 static char *debug_buffer;
 static u32 debug_data_size;
+static struct mutex dbg_buf_lock;	/* mutex for debug_buffer */
 
 static ssize_t debug_read(struct file *file, char __user *buf,
 			  size_t count, loff_t *file_pos)

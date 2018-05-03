@@ -288,8 +288,6 @@ void qcedev_sha_req_cb(void *cookie, unsigned char *digest,
 	if (authdata) {
 		handle->sha_ctxt.auth_data[0] = auth32[0];
 		handle->sha_ctxt.auth_data[1] = auth32[1];
-		handle->sha_ctxt.auth_data[2] = auth32[2];
-		handle->sha_ctxt.auth_data[3] = auth32[3];
 	}
 
 	tasklet_schedule(&pdev->done_tasklet);
@@ -1506,6 +1504,11 @@ static int qcedev_check_cipher_params(struct qcedev_cipher_op_req *req,
 	}
 	/* Check for sum of all dst length is equal to data_len  */
 	for (i = 0, total = 0; i < req->entries; i++) {
+		if (!req->vbuf.dst[i].vaddr && req->vbuf.dst[i].len) {
+			pr_err("%s: NULL req dst vbuf[%d] with length %d\n",
+				__func__, i, req->vbuf.dst[i].len);
+			goto error;
+		}
 		if (req->vbuf.dst[i].len >= U32_MAX - total) {
 			pr_err("%s: Integer overflow on total req dst vbuf length\n",
 				__func__);
@@ -1520,6 +1523,11 @@ static int qcedev_check_cipher_params(struct qcedev_cipher_op_req *req,
 	}
 	/* Check for sum of all src length is equal to data_len  */
 	for (i = 0, total = 0; i < req->entries; i++) {
+		if (!req->vbuf.src[i].vaddr && req->vbuf.src[i].len) {
+			pr_err("%s: NULL req src vbuf[%d] with length %d\n",
+				__func__, i, req->vbuf.src[i].len);
+			goto error;
+		}
 		if (req->vbuf.src[i].len > U32_MAX - total) {
 			pr_err("%s: Integer overflow on total req src vbuf length\n",
 				__func__);

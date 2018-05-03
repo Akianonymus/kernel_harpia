@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2015, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2012-2017, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -482,7 +482,6 @@ int pil_mss_reset_load_mba(struct pil_desc *pil)
 		ret = -ENOMEM;
 		goto err_mss_reset;
 	}
-
 	if (count <= SZ_1M) {
 		/* Ensures memcpy is done for max 1MB fw size */
 		memcpy(mba_virt, data, count);

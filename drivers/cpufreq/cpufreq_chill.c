@@ -15,6 +15,7 @@
 #include <linux/slab.h>
 #include "cpufreq_governor.h"
 #include <linux/display_state.h>
+#include "../../tools/virtio/linux/err.h"
 
 /* Chill version macros */
 #define CHILL_VERSION_MAJOR			(2)

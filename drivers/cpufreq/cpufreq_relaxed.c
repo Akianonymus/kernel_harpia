@@ -19,7 +19,7 @@
 /* Relaxed version macros */
 #define RELAXED_VERSION_MAJOR			(1)
 #define RELAXED_VERSION_MINOR			(3)
-
+#include "../../tools/virtio/linux/err.h"
 /* Relaxed governor macros */
 #define DEF_FREQUENCY_UP_THRESHOLD		(85)
 #define DEF_FREQUENCY_DOWN_THRESHOLD		(35)

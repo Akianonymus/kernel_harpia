@@ -4,7 +4,7 @@ TOOLCHAINDIR=$(pwd)/toolchain/linaro-7.2
 DATE=$(date +"%d%m%Y")
 KERNEL_NAME="BLEEDING_EDGE-Kernel"
 DEVICE="-harpia-"
-VER="-v69"
+VER="-v70"
 TYPE="-OREO"
 FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
 

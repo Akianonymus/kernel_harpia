@@ -140,10 +140,14 @@ sendmessage "Build compiled successfully in $((DIFF / 60)) minute(s) and $((DIFF
         echo "Uploaded"
         printf '\n'
         echo "Normal Logs:" >> tmp1
+        printf '\n' >> tmp1
         deldog $KERNEL_DIR/log >> tmp1
         printf '\n\n' >> tmp1
+        if [[ -s $KERNEL_DIR/logwe ]]; then
         echo "Warning Logs:" >> tmp1
+        printf '\n' >> tmp1
         deldog $KERNEL_DIR/logwe >> tmp1
+        fi
         sendmessage "$(cat tmp1)"
     else
         echo "Uploading zip to transfer"
@@ -152,10 +156,14 @@ sendmessage "Build compiled successfully in $((DIFF / 60)) minute(s) and $((DIFF
         transfer "$FULL_ZIP_PATH" | sed 's/^.*https/https/' >>tmp
         printf '\n\n' >>tmp
         echo "Normal Logs:" >> tmp
+        printf '\n' >> tmp1
         deldog $KERNEL_DIR/log >> tmp
         printf '\n\n' >> tmp
+        if [[ -s $KERNEL_DIR/logwe ]]; then
         echo "Warning Logs:" >> tmp
+        printf '\n' >> tmp1
         deldog $KERNEL_DIR/logwe >> tmp
+        fi
         printf '\n\n' >> tmp
         echo "Last 150 Git changelogs:" >>tmp
         cat "$Anykernel_DIR/changelog.txt" >>tmp

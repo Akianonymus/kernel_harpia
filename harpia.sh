@@ -4,12 +4,12 @@ KERNEL_DIR=$PWD
 DEFCONFIG=harpia_defconfig
 Anykernel_DIR=$KERNEL_DIR/AnyKernel2/harpia
 TOOLCHAINDIR=$(pwd)/../toolchain/linaro-4.9
-DATE=$(env TZ='Asia/Kolkata' date +"%F-%r" | sed -e "s|:|_|g" | sed -e "s| |_|")
+HEAD=$(git rev-parse --short HEAD)
 KERNEL_NAME="BLEEDING_EDGE"
 DEVICE="-harpia-"
-VER="-v69"
-TYPE="-PIE"
-FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
+VER="-v69-"
+TYPE="PIE"
+FINAL_ZIP="$KERNEL_NAME""$DEVICE""$TYPE""$VER""$HEAD".zip
 FULL_ZIP_PATH="$Anykernel_DIR"/"$FINAL_ZIP"
 # key= bot api key
 # id= channel id here

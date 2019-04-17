@@ -59,10 +59,6 @@
 #include <linux/of.h>
 #include <linux/of_address.h>
 
-//Moto, read MACs from boot params
-#include <linux/of.h>
-#include <linux/of_address.h>
-
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(3,9,0))
 #define IEEE80211_CHAN_NO_80MHZ		1<<7
 #endif

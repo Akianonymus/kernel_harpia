@@ -51,7 +51,7 @@ function upload() {
     echo $DOWNLOAD
 }
 
-head="$(git log --graph --pretty=format:'%h-%d %s (%cr) <%an>' --abbrev-commit -n 1 | sed -e 's|*||')"
+head="$(git log --graph --pretty=format:'%h-%d %s (%cr) <%an>' --abbrev-commit -n 1 | sed -e 's|*||' | sed -e 's|\[||' | sed -e 's|\]|:|')"
 urlhead="$(git config --get remote.origin.url | sed -e 's|git@github.com:|https://github.com/|' | sed -e 's|git@gitlab.com:|https://gitlab.com/|' | sed -e 's|\.git||')/commit/$(git rev-parse HEAD)"
 commits="$(git config --get remote.origin.url | sed -e 's|git@github.com:|https://github.com/|' | sed -e 's|git@gitlab.com:|https://gitlab.com/|' | sed -e 's|\.git||')/commits"
 sendmessage "Starting build

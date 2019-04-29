@@ -183,6 +183,8 @@ if [ -e arch/arm/boot/zImage ]; then
         echo "Download link of kernel zip:" >>tmp
         printf '\n' >>tmp
         upload "$FULL_ZIP_PATH" | sed 's/^.*https/https/' >>tmp
+	cat tmp | grep pixel
+        printf '\n'
         printf '\n\n' >>tmp
         echo "Normal Logs:" >>tmp
         printf '\n' >>tmp

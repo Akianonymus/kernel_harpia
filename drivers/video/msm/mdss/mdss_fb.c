@@ -3086,6 +3086,7 @@ static int mdss_fb_pan_idle(struct msm_fb_data_type *mfd)
 	return 0;
 }
 
+/*
 static int mdss_fb_wait_for_kickoff(struct msm_fb_data_type *mfd)
 {
 	int ret = 0;
@@ -3108,6 +3109,7 @@ static int mdss_fb_wait_for_kickoff(struct msm_fb_data_type *mfd)
 
 	return 0;
 }
+*/
 
 static int mdss_fb_pan_display_ex(struct fb_info *info,
 		struct mdp_display_commit *disp_commit)
